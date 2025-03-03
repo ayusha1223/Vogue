@@ -95,7 +95,7 @@ class TeesFragment: Fragment() {
             val itemNameTextView = paymentBottomSheetView.findViewById<TextView>(R.id.itemname)
             val itemPriceTextView = paymentBottomSheetView.findViewById<TextView>(R.id.itemprice)
             val cashOnDeliveryButton = paymentBottomSheetView.findViewById<Button>(R.id.cashOnDeliveryOption)
-            val confirmButton = paymentBottomSheetView.findViewById<Button>(R.id.confirmButton)
+
 
             // Set item details
             itemNameTextView.text = itemName
@@ -119,10 +119,10 @@ class TeesFragment: Fragment() {
                     .show()
             }
 
-            // Handle Confirm button click (optional)
-            confirmButton.setOnClickListener {
-                paymentBottomSheetDialog.dismiss()
-            }
+//            // Handle Confirm button click (optional)
+//            confirmButton.setOnClickListener {
+//                paymentBottomSheetDialog.dismiss()
+//            }
 
         } catch (e: Exception) {
             Log.e("PaymentSheet", "Error showing payment bottom sheet", e)
@@ -130,21 +130,22 @@ class TeesFragment: Fragment() {
     }
 
 
-    // Add item to cart
+    // Function to add item to cart
     private fun addToCart(itemName: String, itemPrice: String) {
-        // Get the SharedViewModel
         val sharedViewModel = ViewModelProvider(requireActivity()).get(SharedViewModel::class.java)
+
+        // Remove "$" and trim spaces before converting to Double
         val cleanedPrice = itemPrice.replace("$", "").trim()
 
-        // Create a CartItem and add it to the cart
         val cartItem = CartItem(
             name = itemName,
-            price = itemPrice.toDoubleOrNull() ?: 0.0, // Convert price safely
-            quantity = 1, // Default value
-
+            price = cleanedPrice.toDoubleOrNull() ?: 0.0, // ✅ Fix price parsing
+            quantity = 1
         )
+
         sharedViewModel.addToCart(cartItem)
-        // Show a toast message
-        android.widget.Toast.makeText(requireContext(), "$itemName added to cart", android.widget.Toast.LENGTH_SHORT).show()
+
+        Toast.makeText(requireContext(), "$itemName added to cart", Toast.LENGTH_SHORT).show()
     }
+
 }

@@ -1,5 +1,6 @@
 package com.example.vogueclothing.ui.Fragment
 
+
 import android.annotation.SuppressLint
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -17,7 +18,7 @@ import com.example.vogueclothing.viewmodel.SharedViewModel
 import com.google.android.material.bottomsheet.BottomSheetDialog
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 
-class PantFragment : Fragment() {
+class PantFragment: Fragment() {
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -26,7 +27,7 @@ class PantFragment : Fragment() {
         // Inflate the layout for this fragment
         val view = inflater.inflate(R.layout.fragment_pant, container, false)
 
-        // Initialize image views and set click listeners
+        // Initialize views
         val image1 = view.findViewById<ImageView>(R.id.image1)
         val image2 = view.findViewById<ImageView>(R.id.image2)
         val image3 = view.findViewById<ImageView>(R.id.image3)
@@ -37,19 +38,51 @@ class PantFragment : Fragment() {
         val image8 = view.findViewById<ImageView>(R.id.image8)
 
         // Set click listeners for all images
-        image1.setOnClickListener { showBottomSheet("Mini", "$10") }
-        image2.setOnClickListener { showBottomSheet("Tube", "$10") }
-        image3.setOnClickListener { showBottomSheet("Pleated", "$5") }
-        image4.setOnClickListener { showPaymentBottomSheet("Godget", "$15") }
-        image5.setOnClickListener { showBottomSheet("Wrap", "$20") }
-        image6.setOnClickListener { showBottomSheet("Bubble", "$82") }
-        image7.setOnClickListener { showBottomSheet("Tulip", "$20") }
-        image8.setOnClickListener { showBottomSheet("Circle", "$25") }
+        image1.setOnClickListener { showBottomSheet("Bombay", "$50") }
+        image2.setOnClickListener { showBottomSheet("Silk", "$60") }
+        image3.setOnClickListener { showBottomSheet("Wrap", "$70") }
+        image4.setOnClickListener { showBottomSheet("Globe", "$80") }
+        image5.setOnClickListener { showBottomSheet("Tank", "$90") }
+        image6.setOnClickListener { showBottomSheet("Choker", "$100") }
+        image7.setOnClickListener { showBottomSheet("BWrap top", "$110") }
+        image8.setOnClickListener { showBottomSheet("Cami", "$120") }
 
         return view
     }
 
-    // Function to show a bottom sheet dialog
+    // Function to show a bottom sheet dialog with Buy Now and Add to Cart options
+    private fun showBottomSheet(itemName: String, itemPrice: String) {
+        // Inflate the bottom sheet layout
+        val bottomSheetView = layoutInflater.inflate(R.layout.bottom_sheet_layout, null)
+
+        // Initialize views in the bottom sheet
+        val itemNameTextView = bottomSheetView.findViewById<TextView>(R.id.itemname)
+        val itemPriceTextView = bottomSheetView.findViewById<TextView>(R.id.itemprice)
+        val buyNowButton = bottomSheetView.findViewById<TextView>(R.id.buynowButton)
+        val addToCartButton = bottomSheetView.findViewById<TextView>(R.id.addTocartButton)
+
+        // Set item details
+        itemNameTextView.text = itemName
+        itemPriceTextView.text = itemPrice
+
+        // Create and show the bottom sheet dialog
+        val bottomSheetDialog = BottomSheetDialog(requireContext())
+        bottomSheetDialog.setContentView(bottomSheetView)
+        bottomSheetDialog.show()
+
+        // Handle Buy Now button click
+        buyNowButton.setOnClickListener {
+            bottomSheetDialog.dismiss()
+            showPaymentBottomSheet(itemName, itemPrice) // Show payment options
+        }
+
+        // Handle Add to Cart button click
+        addToCartButton.setOnClickListener {
+            bottomSheetDialog.dismiss()
+            addToCart(itemName, itemPrice) // Add item to cart
+        }
+    }
+
     @SuppressLint("MissingInflatedId")
     private fun showPaymentBottomSheet(itemName: String, itemPrice: String) {
         try {
@@ -62,7 +95,7 @@ class PantFragment : Fragment() {
             val itemNameTextView = paymentBottomSheetView.findViewById<TextView>(R.id.itemname)
             val itemPriceTextView = paymentBottomSheetView.findViewById<TextView>(R.id.itemprice)
             val cashOnDeliveryButton = paymentBottomSheetView.findViewById<Button>(R.id.cashOnDeliveryOption)
-            val confirmButton = paymentBottomSheetView.findViewById<Button>(R.id.confirmButton)
+
 
             // Set item details
             itemNameTextView.text = itemName
@@ -86,29 +119,33 @@ class PantFragment : Fragment() {
                     .show()
             }
 
-            // Handle Confirm button click (optional)
-            confirmButton.setOnClickListener {
-                paymentBottomSheetDialog.dismiss()
-            }
+//            // Handle Confirm button click (optional)
+//            confirmButton.setOnClickListener {
+//                paymentBottomSheetDialog.dismiss()
+//            }
 
         } catch (e: Exception) {
             Log.e("PaymentSheet", "Error showing payment bottom sheet", e)
         }
     }
+
+
+    // Function to add item to cart
     private fun addToCart(itemName: String, itemPrice: String) {
-        // Get the SharedViewModel
         val sharedViewModel = ViewModelProvider(requireActivity()).get(SharedViewModel::class.java)
+
+        // Remove "$" and trim spaces before converting to Double
         val cleanedPrice = itemPrice.replace("$", "").trim()
 
-        // Create a CartItem and add it to the cart
         val cartItem = CartItem(
             name = itemName,
-            price = itemPrice.toDoubleOrNull() ?: 0.0, // Convert price safely
-            quantity = 1, // Default value
-
+            price = cleanedPrice.toDoubleOrNull() ?: 0.0, // ✅ Fix price parsing
+            quantity = 1
         )
+
         sharedViewModel.addToCart(cartItem)
-        // Show a toast message
-        android.widget.Toast.makeText(requireContext(), "$itemName added to cart", android.widget.Toast.LENGTH_SHORT).show()
+
+        Toast.makeText(requireContext(), "$itemName added to cart", Toast.LENGTH_SHORT).show()
     }
+
 }

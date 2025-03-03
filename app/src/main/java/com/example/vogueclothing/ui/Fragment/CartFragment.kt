@@ -13,6 +13,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.vogueclothing.R
 import com.example.vogueclothing.viewmodel.SharedViewModel
+import com.example.vogueclothing.ui.adapter.CartAdapter
 
 class CartFragment : Fragment() {
 
@@ -28,12 +29,7 @@ class CartFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        val view = try {
-            inflater.inflate(R.layout.fragment_cart2, container, false) // ✅ Ensure this file exists
-        } catch (e: Exception) {
-            e.printStackTrace()
-            return null
-        }
+        val view = inflater.inflate(R.layout.fragment_cart2, container, false)
 
         recyclerViewCart = view.findViewById(R.id.recyclerviewCart)
         totalPriceText = view.findViewById(R.id.totalPriceTextView)
@@ -50,14 +46,10 @@ class CartFragment : Fragment() {
         recyclerViewCart.adapter = cartAdapter
 
         sharedViewModel.getCartItems().observe(viewLifecycleOwner, Observer { cartItems ->
-            if (cartItems.isNullOrEmpty()) {
-                updateCartVisibility(emptyList())
-            } else {
-                recyclerViewCart.post {
-                    cartAdapter.updateCartItems(cartItems.toMutableList()) // ✅ Ensures smooth UI updates
-                    updateTotalPrice(cartItems)
-                    updateCartVisibility(cartItems)
-                }
+            recyclerViewCart.post {
+                cartAdapter.updateCartItems(cartItems.toMutableList()) // ✅ Ensures smooth UI updates
+                updateTotalPrice(cartItems)
+                updateCartVisibility(cartItems)
             }
         })
 
@@ -70,9 +62,6 @@ class CartFragment : Fragment() {
 
         totalPriceText.text = "Total: $${"%.2f".format(totalPrice)}"
         totalItemsText.text = "Items: $totalItems"
-
-        // ✅ Update ViewModel with new prices
-        sharedViewModel.updateCart(cartItems)
     }
 
     private fun updateCartVisibility(cartItems: List<CartItem>) {

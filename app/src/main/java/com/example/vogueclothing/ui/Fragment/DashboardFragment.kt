@@ -89,12 +89,14 @@ class DashboardFragment : Fragment() {
             if (!isAdded) return  // Ensure the fragment is still attached
 
             // Inflate the bottom sheet layout
-            val paymentBottomSheetView = layoutInflater.inflate(R.layout.payment_bottom_sheet_layout, null, false)
+            val paymentBottomSheetView =
+                layoutInflater.inflate(R.layout.payment_bottom_sheet_layout, null, false)
 
             // Initialize views
             val itemNameTextView = paymentBottomSheetView.findViewById<TextView>(R.id.itemname)
             val itemPriceTextView = paymentBottomSheetView.findViewById<TextView>(R.id.itemprice)
-            val cashOnDeliveryButton = paymentBottomSheetView.findViewById<Button>(R.id.cashOnDeliveryOption)
+            val cashOnDeliveryButton =
+                paymentBottomSheetView.findViewById<Button>(R.id.cashOnDeliveryOption)
             val confirmButton = paymentBottomSheetView.findViewById<Button>(R.id.confirmButton)
 
             // Set item details
@@ -113,7 +115,11 @@ class DashboardFragment : Fragment() {
                     .setMessage("Are you sure you want to place this order with Cash on Delivery?")
                     .setPositiveButton("Confirm") { _, _ ->
                         paymentBottomSheetDialog.dismiss()
-                        Toast.makeText(requireContext(), "Order confirmed for $itemName", Toast.LENGTH_SHORT).show()
+                        Toast.makeText(
+                            requireContext(),
+                            "Order confirmed for $itemName",
+                            Toast.LENGTH_SHORT
+                        ).show()
                     }
                     .setNegativeButton("Cancel") { dialog, _ -> dialog.dismiss() }
                     .show()
@@ -132,19 +138,20 @@ class DashboardFragment : Fragment() {
 
     // Function to add item to cart
     private fun addToCart(itemName: String, itemPrice: String) {
-        // Get the SharedViewModel
         val sharedViewModel = ViewModelProvider(requireActivity()).get(SharedViewModel::class.java)
+
+        // Remove "$" and trim spaces before converting to Double
         val cleanedPrice = itemPrice.replace("$", "").trim()
 
-        // Create a CartItem and add it to the cart
         val cartItem = CartItem(
             name = itemName,
-            price = itemPrice.toDoubleOrNull() ?: 0.0, // Convert price safely
-            quantity = 1, // Default value
-
+            price = cleanedPrice.toDoubleOrNull() ?: 0.0, // ✅ Fix price parsing
+            quantity = 1
         )
+
         sharedViewModel.addToCart(cartItem)
-        // Show a toast message
-        android.widget.Toast.makeText(requireContext(), "$itemName added to cart", android.widget.Toast.LENGTH_SHORT).show()
+
+        Toast.makeText(requireContext(), "$itemName added to cart", Toast.LENGTH_SHORT).show()
     }
+
 }

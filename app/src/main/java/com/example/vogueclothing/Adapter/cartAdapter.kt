@@ -1,12 +1,10 @@
-package com.example.vogueclothing.ui.Fragment
-
+package com.example.vogueclothing.ui.adapter
 
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.TextView
-import android.widget.Button
 import android.widget.ImageButton
+import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.example.vogueclothing.R
 import com.example.vogueclothing.ui.Fragment.CartItem
@@ -16,12 +14,12 @@ class CartAdapter(
     private val onCartUpdated: (List<CartItem>) -> Unit
 ) : RecyclerView.Adapter<CartAdapter.CartViewHolder>() {
 
-    class CartViewHolder(view: View) : RecyclerView.ViewHolder(view) {
-        val itemName: TextView = view.findViewById(R.id.itemNameTextView)
-        val itemPrice: TextView = view.findViewById(R.id.itemPriceTextView)
-        val itemQuantity: TextView = view.findViewById(R.id.itemQuantityTextView)
-        val increaseQuantity: ImageButton = view.findViewById(R.id.increaseButton)
-        val decreaseQuantity: ImageButton = view.findViewById(R.id.decreaseButton)
+    inner class CartViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
+        val itemNameTextView: TextView = itemView.findViewById(R.id.itemNameTextView)
+        val itemPriceTextView: TextView = itemView.findViewById(R.id.itemPriceTextView)
+        val itemQuantityTextView: TextView = itemView.findViewById(R.id.itemQuantityTextView)
+        val increaseButton: ImageButton = itemView.findViewById(R.id.increaseButton)
+        val decreaseButton: ImageButton = itemView.findViewById(R.id.decreaseButton)
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): CartViewHolder {
@@ -30,38 +28,31 @@ class CartAdapter(
     }
 
     override fun onBindViewHolder(holder: CartViewHolder, position: Int) {
-        val item = cartItems[position]
+        val cartItem = cartItems[position]
 
-        holder.itemName.text = item.name
-        holder.itemPrice.text = "$${"%.2f".format(item.price * item.quantity)}" // ✅ Updated price
-        holder.itemQuantity.text = "Qty: ${item.quantity}"
+        holder.itemNameTextView.text = cartItem.name
+        holder.itemPriceTextView.text = "$${"%.2f".format(cartItem.price)}"  // ✅ Ensure price format
+        holder.itemQuantityTextView.text = cartItem.quantity.toString()
 
-        // ✅ Increase quantity
-        holder.increaseQuantity.setOnClickListener {
-            item.quantity++
+        holder.increaseButton.setOnClickListener {
+            cartItem.quantity++
             notifyItemChanged(position)
-            onCartUpdated(cartItems) // ✅ Update total price
+            onCartUpdated(cartItems)  // ✅ Ensure ViewModel updates
         }
 
-        // ✅ Decrease quantity
-        holder.decreaseQuantity.setOnClickListener {
-            if (item.quantity > 1) {
-                item.quantity--
+        holder.decreaseButton.setOnClickListener {
+            if (cartItem.quantity > 1) {
+                cartItem.quantity--
                 notifyItemChanged(position)
-                onCartUpdated(cartItems) // ✅ Update total price
+                onCartUpdated(cartItems)  // ✅ Ensure ViewModel updates
             }
         }
     }
 
-    override fun getItemCount() = cartItems.size
+    override fun getItemCount(): Int = cartItems.size
 
-    fun updateCartItems(newItems: List<CartItem>) {
-        cartItems.clear()
-        cartItems.addAll(newItems)
-
-        // ✅ Correct way to update RecyclerView without causing UI lag
+    fun updateCartItems(newCartItems: MutableList<CartItem>) {
+        cartItems = newCartItems
         notifyDataSetChanged()
-
-        onCartUpdated(cartItems)
     }
 }
