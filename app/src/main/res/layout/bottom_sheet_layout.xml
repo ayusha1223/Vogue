@@ -1,0 +1,45 @@
+<!-- res/layout/bottom_sheet_layout.xml -->
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:padding="16dp">
+
+    <!-- Item Name and Price -->
+    <TextView
+        android:id="@+id/itemname"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Item Name"
+        android:textSize="18sp"
+        android:textStyle="bold"
+        android:layout_marginBottom="8dp"/>
+
+    <TextView
+        android:id="@+id/itemprice"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Item Price"
+        android:textSize="16sp"
+        android:layout_marginBottom="16dp"/>
+
+    <!-- Buttons -->
+    <Button
+        android:id="@+id/buynowButton"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Buy Now"
+        android:textColor="@android:color/white"
+
+        android:layout_marginBottom="8dp"/>
+
+    <Button
+        android:id="@+id/addTocartButton"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Add to Cart"
+        android:textColor="@android:color/white">
+
+    </Button>
+
+</LinearLayout>

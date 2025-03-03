@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "832450767939",
+    "project_id": "vogueclothing-963a4",
+    "storage_bucket": "vogueclothing-963a4.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:832450767939:android:cfa84203ff99b314c338f6",
+        "android_client_info": {
+          "package_name": "com.example.vogueclothing"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDPQZVvWlVcjBzKYVZyNHaPI_bAK9ka4aE"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

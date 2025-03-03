@@ -1,0 +1,87 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+    android:padding="16dp"
+    android:gravity="center"
+    android:paddingTop="40dp"
+    android:background="@drawable/login">
+
+    <!-- CardView for login form -->
+    <androidx.cardview.widget.CardView
+        android:layout_width="match_parent"
+        android:layout_height="400dp"
+        android:layout_margin="20dp"
+        android:elevation="8dp"
+        app:cardCornerRadius="16dp"
+        android:padding="24dp">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:gravity="center">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="50dp"
+                android:text="LOGIN"
+                android:textSize="24sp"
+                android:textStyle="bold"
+                android:layout_marginTop="40dp"
+                android:layout_marginBottom="24dp"/>
+
+            <EditText
+                android:id="@+id/username"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="Username"
+                android:inputType="text"
+                android:drawableStart="@drawable/email"
+                android:drawablePadding="8dp"
+                android:layout_marginBottom="16dp"/>
+
+            <EditText
+                android:id="@+id/password"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="Password"
+                android:inputType="textPassword"
+                android:drawableStart="@drawable/password"
+                android:layout_marginBottom="24dp"/>
+
+            <!-- Forgot password link -->
+            <TextView
+                android:id="@+id/forgotPassword"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Forgot Password?"
+                android:textColor="@color/purple"
+                android:textStyle="bold"
+                android:layout_marginRight="12dp"
+                android:layout_gravity="end"
+                android:layout_marginBottom="24dp"/>
+
+            <!-- Login button -->
+            <Button
+                android:id="@+id/loginButton"
+                android:layout_width="100dp"
+                android:layout_height="wrap_content"
+                android:text="LOGIN"
+                android:backgroundTint="@color/purple"
+                android:textColor="@color/white"
+                android:layout_marginBottom="16dp"/>
+
+            <!-- Sign up button -->
+            <Button
+                android:id="@+id/signUpButton"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Don't have an account? SIGN UP"
+                android:textColor="@color/white"
+
+                android:textStyle="bold"/>
+        </LinearLayout>
+    </androidx.cardview.widget.CardView>
+</LinearLayout>

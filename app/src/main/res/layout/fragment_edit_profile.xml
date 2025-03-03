@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:padding="20dp"
+    android:gravity="center"
+    android:background="@drawable/login">
+
+    <!-- Profile Image at the Top Center -->
+    <ImageView
+        android:id="@+id/profile_image"
+        android:layout_width="100dp"
+        android:layout_height="100dp"
+        android:src="@drawable/baseline_manage_accounts_24"
+        android:layout_gravity="center"
+        android:layout_marginBottom="20dp"
+        android:scaleType="fitCenter"/>
+
+    <!-- Full Name -->
+    <EditText
+        android:id="@+id/edit_full_name"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Full Name"
+        android:textSize="16sp"
+        android:padding="12dp"/>
+
+    <!-- Email -->
+    <EditText
+        android:id="@+id/edit_email"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Email"
+        android:inputType="textEmailAddress"
+        android:textSize="16sp"
+        android:padding="12dp"
+        android:layout_marginTop="10dp" />
+
+    <!-- Update Password -->
+    <EditText
+        android:id="@+id/edit_password"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Update Password"
+        android:inputType="textPassword"
+        android:textSize="16sp"
+        android:padding="12dp"
+        android:layout_marginTop="10dp" />
+
+    <!-- Phone Number -->
+    <EditText
+        android:id="@+id/edit_phone_number"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Phone Number"
+        android:inputType="phone"
+        android:textSize="16sp"
+        android:padding="12dp"
+        android:layout_marginTop="10dp" />
+
+    <!-- Update Button -->
+    <Button
+        android:id="@+id/button_update_profile"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Update Profile"
+        android:background="@color/black"
+        android:textColor="@color/white"
+        android:padding="15dp"
+        android:layout_marginTop="20dp" />
+
+</LinearLayout>

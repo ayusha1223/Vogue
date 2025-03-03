@@ -1,0 +1,26 @@
+<!-- res/layout/confirm_bottom_sheet_layout.xml -->
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:padding="16dp">
+
+    <!-- Confirmation Message -->
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Are you sure you want to place this order with Cash on Delivery?"
+        android:textSize="16sp"
+        android:layout_marginBottom="16dp"/>
+
+    <!-- Confirm Order Button -->
+    <Button
+        android:id="@+id/confirmButton"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Confirm"
+        android:textColor="@android:color/white">
+
+    </Button>
+
+</LinearLayout>
